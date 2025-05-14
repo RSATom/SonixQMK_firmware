@@ -3,14 +3,20 @@
 
 #include "spi_master.h"
 
-bool is_keyboard_master(void) {
-    // println("is_keyboard_master");
-    return true;
+void keyboard_post_init_user(void) {
+    // Customise these values to desired behaviour
+    //debug_enable=true;
+    //debug_matrix=true;
+    //debug_keyboard=true;
+    //debug_mouse=true;
 }
 
-void transport_master_init(void) {
-    println("transport_master_init");
+bool is_keyboard_master(void) { return true; }
 
+void transport_slave_init(void) {}
+void transport_slave(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) {}
+
+void transport_master_init(void) {
     gpio_set_pin_output(SPI_MASTER_PIN);
     gpio_write_pin_high(SPI_MASTER_PIN);
 
@@ -20,29 +26,18 @@ void transport_master_init(void) {
 bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) {
     gpio_write_pin_low(SPI_MASTER_PIN);
 
-    chThdSleepMilliseconds(10);
+    println("transport_master");
 
-    if(spi_start(SPI_SS_PIN, false, 0, 4096)) {
+    if(spi_start(SPI_SS_PIN, false, 0, 119)) {
         println("spi started");
 
-        spi_write(0x00);
-        spi_write(0x08);
-        spi_write(0x00);
-        spi_write(0x00);
-        spi_write(0xFF);
         spi_write(0xA0);
-
-        chThdSleepMilliseconds(1);
-
         spi_stop();
     } else {
         println("spi start failed");
-        chThdSleepMilliseconds(1);
     }
 
     gpio_write_pin_high(SPI_MASTER_PIN);
-
-    println("transport_master");
 
     return true;
 }
