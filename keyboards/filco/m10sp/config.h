@@ -1,6 +1,7 @@
 #pragma once
 
-#define USB_POLLING_INTERVAL_MS 100
+#define USB_POLLING_INTERVAL_MS 10
+#define DEBUG_MATRIX_SCAN_RATE
 
 #define SPI_DRIVER SPID0
 
