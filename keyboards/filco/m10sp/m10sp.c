@@ -6,56 +6,21 @@
 
 #define USE_SPI_DRIVER 1
 
-#define SPI_TEST_CNT 32
-
-#define mskSPI_BUSY (0x1<<4) //Busy flag
-#define mskSPI_RX_EMPTY (0x1<<2) //RX FIFO empty flag
-#define mskSPI_TXFIFOTHF (0x1<<5) //TX FIFO threshold flag
-#define mskSPI_RX_EMPTY (0x1<<2) //RX FIFO empty flag
-#define	SPI_FRESET_RESET_FIFO 3 //Reset finite state machine and FIFO
-#define __SPI0_FIFO_RESET (SN_SPI0->CTRL0_b.FRESET = SPI_FRESET_RESET_FIFO)
-
-static void SPI_NBytesTxRx(SPIDriver* spip, uint8_t* txBuf, uint8_t* rxBuf, uint32_t N_Bytes)
+static void SPI_Send(SPIDriver* spip, uint8_t* txBuf, size_t size)
 {
-	uint32_t  wSPI_Send_Pointer = 0;
-	uint32_t  wSPI_Get_Pointer = 0;
+    uint32_t offset = 0;
 
-	while(wSPI_Send_Pointer != N_Bytes)
-	{
-		SN_SPI0->DATA = txBuf[wSPI_Send_Pointer++];
+    while(offset < size) {
+        spip->spi->DATA = txBuf[offset];
 
-		while (!(SN_SPI0->STAT & mskSPI_TXFIFOTHF)); //TX Half-Empty
-
-		if(!(SN_SPI0->STAT & mskSPI_RX_EMPTY)) //Check having any data in RXFIFO
-		{
-			rxBuf[wSPI_Get_Pointer++] = SN_SPI0->DATA;
-		}
-	}
-
-	__SPI0_FIFO_RESET;
-}
-
-static uint16_t hwSPI_Tx_Fifo[SPI_TEST_CNT] = {
-    0xAA, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF,
-    0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF,
-};
-static uint16_t hwSPI_Rx_Fifo[SPI_TEST_CNT] = { 0 };
-
-static void SPI0_NBytesTxRx(uint32_t size)
-{
-	uint32_t offset = 0;
-
-	while(offset < size) {
-		SN_SPI0->DATA = hwSPI_Tx_Fifo[offset];
-
-		while (!(SN_SPI0->STAT & mskSPI_TXFIFOTHF)) { };
+        while(!spip->spi->STAT_b.TXFIFOTHF) {};
 
         ++offset;
-	}
+    }
 
-	while(SN_SPI0->STAT & mskSPI_BUSY) {};
+    while(spip->spi->STAT_b.BUSY) {};
 
-	__SPI0_FIFO_RESET;
+    SPI_FIFO_FRESET(spip);
 }
 
 #if USE_SPI_DRIVER
@@ -107,12 +72,13 @@ static void sendLedState(void) {
     if(spiTransportStart()) {
         println("SPI Transport started");
 
-        uint8_t txBuf[] = { 0xAA };
-        uint8_t rxBuf[sizeof(txBuf)] = { 0 };
+        uint8_t txBuf[] = { 0xA0 };
 
+        spiStartSend(&SPI_DRIVER, sizeof(txBuf), &txBuf);
         //spiSend(&SPI_DRIVER, sizeof(txBuf), &txBuf);
-        //SPI_NBytesTxRx(&SPI_DRIVER, txBuf, rxBuf, sizeof(txBuf));
-        SPI0_NBytesTxRx(2);
+        //SPI_Send(&SPI_DRIVER, txBuf, sizeof(txBuf));
+        //uint16_t frame = 0xA0A0;
+        //frame = spiPolledExchange(&SPI_DRIVER, frame);
 
         spiTransportStop();
     }
