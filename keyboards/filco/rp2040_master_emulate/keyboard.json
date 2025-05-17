@@ -1,0 +1,33 @@
+{
+    "keyboard_name": "rp2040 master emulate",
+    "manufacturer": "filco",
+    "bootloader": "rp2040",
+    "processor": "RP2040",
+    "diode_direction": "ROW2COL",
+    "features": {
+        "bootmagic": true,
+        "console": true
+    },
+    "split":{
+        "enabled": true,
+        "transport": {
+            "protocol": "custom"
+        }
+    },
+    "matrix_pins": {
+        "cols": ["GP29"],
+        "rows": ["GP28"]
+    },
+    "usb": {
+        "device_version": "0.1.0",
+        "pid": "0x2EFD",
+        "vid": "0x2372"
+    },
+    "layouts": {
+        "LAYOUT_dummy": {
+            "layout": [
+                {"matrix": [0, 0],  "x": 0,  "y": 0}
+            ]
+        }
+    }
+}
