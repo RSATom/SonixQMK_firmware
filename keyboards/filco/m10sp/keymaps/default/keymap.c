@@ -3,7 +3,11 @@
 enum {
     DEFAULT_LAYER,
     FN_LAYER,
+    SHIFT_LAYER,
 } Layers;
+
+#define LM_LSHIFT_LAYER LM(SHIFT_LAYER, MOD_LSFT)
+#define LM_RSHIFT_LAYER LM(SHIFT_LAYER, MOD_RSFT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [DEFAULT_LAYER] = LAYOUT_72us(
@@ -16,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*L3*/KC_CAPS_LOCK,    KC_A,     KC_S,    KC_D,         KC_F,            KC_G,             KC_G,         KC_LEFT_CTRL/*M4*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C7
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_Y,         XXXXXXX,            XXXXXXX/*M8*/,       XXXXXXX,            XXXXXXX,
 
-        /*L4*/KC_LEFT_SHIFT,   KC_Z,     KC_X,    KC_C,         KC_V,            KC_B,             KC_B,         MO(FN_LAYER)/*M5*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C9
+        /*L4*/LM_LSHIFT_LAYER, KC_Z,     KC_X,    KC_C,         KC_V,            KC_B,             KC_B,         MO(FN_LAYER)/*M5*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C9
         /*R2*/KC_U,            KC_I,     KC_O,    KC_P,         KC_LEFT_BRACKET, KC_RIGHT_BRACKET, KC_BACKSLASH, XXXXXXX,            XXXXXXX,             XXXXXXX,            XXXXXXX,
 
         /*L5*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX/*M2*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C4
@@ -29,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_N,         XXXXXXX,            MO(FN_LAYER)/*M10*/, KC_RIGHT_ALT,       XXXXXXX,
 
         /*L8*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            KC_LCTL,             XXXXXXX,            XXXXXXX, // C10
-        /*R4*/KC_M,            KC_COMMA, KC_DOT,  KC_SLASH,     KC_RIGHT_SHIFT,  XXXXXXX,          XXXXXXX,      XXXXXXX,            XXXXXXX,             KC_RWIN,            XXXXXXX
+        /*R4*/KC_M,            KC_COMMA, KC_DOT,  KC_SLASH,     LM_RSHIFT_LAYER, XXXXXXX,          XXXXXXX,      XXXXXXX,            XXXXXXX,             KC_RWIN,            XXXXXXX
     ),
     [FN_LAYER] = LAYOUT_72us(
         /*L1*/KC_GRAVE, KC_F1,   KC_F2,           KC_F3,        KC_F4,        KC_F5,      KC_F6,   _______/*M1*/, _______,        _______,       _______,
@@ -55,6 +59,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         /*L8*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______,        _______,       _______,
         /*R4*/_______,  _______, KC_END,          KC_PAGE_DOWN, _______,      _______,    _______, _______,       _______,        _______,       _______
+    ),
+    [SHIFT_LAYER] = LAYOUT_72us(
+        /*L1*/KC_GRAVE, _______, _______, _______, _______, _______, _______, _______/*M1*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______/*M6*/,  _______,       _______,
+
+        /*L2*/_______,  _______, _______, _______, _______, _______, _______, _______/*M3*/, _______,        _______,       _______,
+        /*R1*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______/*M7*/,  _______/*Fn*/, _______,
+
+        /*L3*/_______,  _______, _______, _______, _______, _______, _______, _______/*M4*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______/*M8*/,  _______,       _______,
+
+        /*L4*/_______,  _______, _______, _______, _______, _______, _______, _______/*M5*/, _______,        _______,       _______,
+        /*R2*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______,        _______,       _______,
+
+        /*L5*/_______,  _______, _______, _______, _______, _______, _______, _______/*M2*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______/*M9*/,  _______,       _______,
+
+        /*L6*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______,        _______,       _______,
+        /*R3*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______,        _______,       _______,
+
+        /*L7*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______,        _______,       _______,
+        /*R_*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______/*M10*/, _______,       _______,
+
+        /*L8*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______,        _______,       _______,
+        /*R4*/_______,  _______, _______, _______, _______, _______, _______, _______,       _______,        _______,       _______
     )
 #if 0
     [EMPTY_LAYER] = LAYOUT_72us(
