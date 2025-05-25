@@ -1,5 +1,7 @@
 #pragma once
 
+#define CORTEX_ENABLE_WFI_IDLE FALSE
+
 #define SEND_LEDS_MODE_PIN A1 // B10
 
 #define SPI_DRIVER SPID0
