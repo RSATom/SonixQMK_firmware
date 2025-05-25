@@ -2,6 +2,7 @@
 
 enum {
     DEFAULT_LAYER,
+    FN_LAYER,
 } Layers;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -10,12 +11,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            KC_GRAVE/*M6*/,      XXXXXXX,            XXXXXXX,
 
         /*L2*/KC_TAB,          KC_Q,     KC_W,    KC_E,         KC_R,            KC_T,             KC_T,         XXXXXXX/*M3*/,      XXXXXXX,             XXXXXXX,            KC_LWIN, // C5
-        /*R1*/KC_7,            KC_8,     KC_9,    KC_0,         KC_MINUS,        KC_EQUAL,         KC_BACKSPACE, XXXXXXX,            XXXXXXX/*M7*/,       XXXXXXX/*Fn*/,      XXXXXXX,
+        /*R1*/KC_7,            KC_8,     KC_9,    KC_0,         KC_MINUS,        KC_EQUAL,         KC_BACKSPACE, XXXXXXX,            XXXXXXX/*M7*/,       MO(FN_LAYER)/*Fn*/, XXXXXXX,
 
         /*L3*/KC_CAPS_LOCK,    KC_A,     KC_S,    KC_D,         KC_F,            KC_G,             KC_G,         KC_LEFT_CTRL/*M4*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C7
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_Y,         XXXXXXX,            XXXXXXX/*M8*/,       XXXXXXX,            XXXXXXX,
 
-        /*L4*/KC_LEFT_SHIFT,   KC_Z,     KC_X,    KC_C,         KC_V,            KC_B,             KC_B,         XXXXXXX/*M5*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C9
+        /*L4*/KC_LEFT_SHIFT,   KC_Z,     KC_X,    KC_C,         KC_V,            KC_B,             KC_B,         MO(FN_LAYER)/*M5*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C9
         /*R2*/KC_U,            KC_I,     KC_O,    KC_P,         KC_LEFT_BRACKET, KC_RIGHT_BRACKET, KC_BACKSLASH, XXXXXXX,            XXXXXXX,             XXXXXXX,            XXXXXXX,
 
         /*L5*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX/*M2*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C4
@@ -25,10 +26,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*R3*/KC_J,            KC_K,     KC_L,    KC_SEMICOLON, KC_QUOTE,        KC_ENTER,         KC_6,         XXXXXXX,            KC_RIGHT_CTRL,       XXXXXXX,            XXXXXXX,
 
         /*L7*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            XXXXXXX,             KC_SPACE,           XXXXXXX, // C8
-        /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_N,         XXXXXXX,            XXXXXXX/*M10*/,      KC_RIGHT_ALT,       XXXXXXX,
+        /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_N,         XXXXXXX,            MO(FN_LAYER)/*M10*/, KC_RIGHT_ALT,       XXXXXXX,
 
         /*L8*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            KC_LCTL,             XXXXXXX,            XXXXXXX, // C10
         /*R4*/KC_M,            KC_COMMA, KC_DOT,  KC_SLASH,     KC_RIGHT_SHIFT,  XXXXXXX,          XXXXXXX,      XXXXXXX,            XXXXXXX,             KC_RWIN,            XXXXXXX
+    ),
+    [FN_LAYER] = LAYOUT_72us(
+        /*L1*/KC_GRAVE, KC_F1,   KC_F2,           KC_F3,        KC_F4,        KC_F5,      KC_F6,   _______/*M1*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______/*M6*/,  _______,       _______,
+
+        /*L2*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______/*M3*/, _______,        _______,       _______,
+        /*R1*/KC_F7,    KC_F8,   KC_F9,           KC_F10,       KC_F11,       KC_F12,     _______, _______,       _______/*M7*/,  _______/*Fn*/, _______,
+
+        /*L3*/_______,  _______, _______,         _______,      KC_PAGE_DOWN, _______,    _______, _______/*M4*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______,         _______,      _______,      _______,    KC_HOME, _______,       _______/*M8*/,  _______,       _______,
+
+        /*L4*/_______,  _______, KC_DELETE,       _______,      _______,      KC_PAGE_UP, _______, _______/*M5*/, _______,        _______,       _______,
+        /*R2*/KC_END,   _______, KC_PRINT_SCREEN, _______,      KC_PAUSE,     KC_INS,     KC_DEL,  _______,       _______,        _______,       _______,
+
+        /*L5*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______/*M2*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______,         _______,      _______,      _______,    KC_LEFT, _______,       _______/*M9*/,  _______,       _______,
+
+        /*L6*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______,        _______,       _______,
+        /*R3*/KC_DOWN,  KC_UP,   KC_RIGHT,        KC_HOME,      KC_PAGE_UP,   _______,    _______, _______,       _______,        _______,       _______,
+
+        /*L7*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______,        _______,       _______,
+        /*R_*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______/*M10*/, _______,       _______,
+
+        /*L8*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______,        _______,       _______,
+        /*R4*/_______,  _______, KC_END,          KC_PAGE_DOWN, _______,      _______,    _______, _______,       _______,        _______,       _______
     )
 #if 0
     [EMPTY_LAYER] = LAYOUT_72us(
