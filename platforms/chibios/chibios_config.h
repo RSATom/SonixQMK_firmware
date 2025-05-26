@@ -17,7 +17,7 @@
 
 #include "compiler_support.h"
 
-#ifndef USB_VBUS_PIN
+#if !defined(USB_VBUS_PIN) && !defined(NO_SPLIT_USB_DETECT)
 #    define SPLIT_USB_DETECT // Force this on when dedicated pin is not used
 #endif
 

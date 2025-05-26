@@ -9,6 +9,9 @@
     },
     "split":{
         "enabled": true,
+        "usb_detect": {
+            "enabled": false
+        },
         "transport": {
             "protocol": "custom"
         }
