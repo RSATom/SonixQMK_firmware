@@ -97,7 +97,7 @@ bool spi_start_extended(spi_start_config_t *start_config) {
     }
 #endif
 
-#if !(defined(WB32F3G71xx) || defined(WB32FQ95xx))
+#if !(defined(WB32F3G71xx) || defined(WB32FQ95xx) || defined(MCU_SN32))
     uint16_t roundedDivisor = 2;
     while (roundedDivisor < start_config->divisor) {
         roundedDivisor <<= 1;
@@ -105,6 +105,24 @@ bool spi_start_extended(spi_start_config_t *start_config) {
 
     if (roundedDivisor < 2 || roundedDivisor > 256) {
         return false;
+    }
+#endif
+
+#ifdef MCU_SN32
+    uint32_t divisor;
+    if (start_config->divisor < 2 || start_config->divisor > 512 || start_config->divisor % 2) {
+        return false;
+    }
+
+    switch (start_config->divisor) {
+        case 2:
+            divisor = 0;
+        case 4:
+            divisor = 1;
+        case 6:
+            divisor = 2;
+        default:
+            divisor = (start_config->divisor >> 1) - 1;
     }
 #endif
 
@@ -238,6 +256,28 @@ bool spi_start_extended(spi_start_config_t *start_config) {
         case 3:
             spiConfig.SSPCR0 |= SPI_SSPCR0_SPO; // Clock polarity: high
             spiConfig.SSPCR0 |= SPI_SSPCR0_SPH; // Clock phase: sample on second edge transition
+            break;
+    }
+#elif defined(MCU_SN32)
+    spiConfig.clkdiv = divisor;
+    spiConfig.slave = false;
+
+    spiConfig.ctrl0 = SPI_DATA_LENGTH(8);
+
+    spiConfig.ctrl1 = start_config->lsb_first ? SPI_MLSB_LSB : SPI_MLSB_MSB;
+
+    switch(start_config->mode) {
+        case 0:
+            spiConfig.ctrl1 |= SPI_CPOL_LOW | SPI_CPHA_FALLING;
+            break;
+        case 1:
+            spiConfig.ctrl1 |= SPI_CPOL_LOW | SPI_CPHA_RISING;
+            break;
+        case 2:
+            spiConfig.ctrl1 |= SPI_CPOL_HIGH | SPI_CPHA_FALLING;
+            break;
+        case 3:
+            spiConfig.ctrl1 |= SPI_CPOL_HIGH | SPI_CPHA_RISING;
             break;
     }
 #else
