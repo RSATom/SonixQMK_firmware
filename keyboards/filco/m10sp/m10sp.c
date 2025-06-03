@@ -1,5 +1,6 @@
 #include <hal.h>
 #include <quantum.h>
+#include <spi_master.h>
 
 /* halfs data exchange SPI protocol
 
@@ -89,50 +90,21 @@ Left Half <-- Keys (SEND_LEDS_MODE_PIN = HIGH)
 
 #define LEDS_SEND_INTERVAL 100 // milliseconds
 
-static bool spiTransportInitialized = false;
-static bool spiTransportStarted = false;
-static SPIConfig spiConfig;
 
 static void spiTransportInit(void) {
-    if(spiTransportInitialized) return;
-
-    spiInit();
-
-    spiTransportInitialized = true;
-
-    spiStop(&SPI_DRIVER);
-    spiTransportStarted = false;
+    spi_init();
 }
 
 static bool spiTransportStart(void) {
-    if(spiTransportStarted) return false;
-
-    spiConfig.clkdiv = (SPI_DIV / 2) - 1;
-    spiConfig.ctrl0 = SPI_DATA_LENGTH(8);
-    spiConfig.ctrl1 = SPI_MLSB_MSB | SPI_CPOL_LOW | SPI_CPHA_FALLING;
-    spiConfig.slave = false;
-
-#if SPI_SELECT_MODE == SPI_SELECT_MODE_PAD
-    spiConfig.ssport = PAL_PORT(SPI_SS_PIN);
-    spiConfig.sspad  = PAL_PAD(SPI_SS_PIN);
-    gpio_set_pin_output(SPI_SS_PIN);
-#endif
-
-    spiStart(&SPI_DRIVER, &spiConfig);
-    spiSelect(&SPI_DRIVER);
-
-    spiTransportStarted = true;
-
-    return spiTransportStarted;
+    return spi_start(
+        SPI_SS_PIN,
+        false,
+        0,
+        SPI_DIV);
 }
 
 static void spiTransportStop(void) {
-    if(!spiTransportStarted) return;
-
-    spiUnselect(&SPI_DRIVER);
-    spiStop(&SPI_DRIVER);
-
-    spiTransportStarted = false;
+    spi_stop();
 }
 
 static systime_t lastLedsSendTime = 0;
