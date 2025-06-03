@@ -66,7 +66,7 @@ Left Half <-- Keys (SEND_LEDS_MODE_PIN = HIGH)
 00 00 00 00 00 00 00 00 00 00 80 00 - Win
 */
 
-// #define WAIT_BOOT_KEY
+#define WAIT_BOOT_KEY
 
 #define SLAVE_MATRIX_ROWS 8
 #define SLAVE_MATRIX_RAW_COLS 12
@@ -224,6 +224,17 @@ bool led_update_kb(led_t led_state) {
 }
 
 bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) {
+#ifdef WAIT_BOOT_KEY
+    static unsigned counter = 0;
+    if(counter < 3) { //give chance to switch to bootloader
+        ++counter;
+
+        chThdSleepMilliseconds(50);
+
+        return false;
+    }
+#endif
+
     if(TIME_I2MS(chVTTimeElapsedSinceX(lastLedsSendTime)) > LEDS_SEND_INTERVAL) {
         sendLedsState(host_keyboard_led_state());
     }
