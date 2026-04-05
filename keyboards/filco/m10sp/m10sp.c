@@ -68,7 +68,13 @@ Left Half <-- Keys (SEND_LEDS_MODE_PIN = HIGH)
 
 #define WAIT_BOOT_KEY
 
-#define SLAVE_MATRIX_ROWS 8
+#define ROWS_PER_HAND (MATRIX_ROWS / 2)
+
+#ifndef MATRIX_INPUT_PRESSED_STATE
+#    define MATRIX_INPUT_PRESSED_STATE 0
+#endif
+
+#define SLAVE_MATRIX_ROWS ROWS_PER_HAND
 #define SLAVE_MATRIX_RAW_COLS 12
 #define SLAVE_MATRIX_COLS_OFFSET 1
 #define SLAVE_MATRIX_COLS 10
@@ -90,6 +96,9 @@ Left Half <-- Keys (SEND_LEDS_MODE_PIN = HIGH)
 
 #define LEDS_SEND_INTERVAL 100 // milliseconds
 
+extern matrix_row_t raw_matrix[MATRIX_ROWS]; // raw values
+static pin_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
+static pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 
 static void spiTransportInit(void) {
     spi_init();
@@ -152,6 +161,7 @@ static bool sendLedsState(led_t led_state) {
     return success;
 }
 
+/*
 static bool receiveKeysState(matrix_row_t slave_matrix[]) {
     bool success = false;
 
@@ -177,6 +187,7 @@ static bool receiveKeysState(matrix_row_t slave_matrix[]) {
 
     return success;
 }
+*/
 
 void keyboard_pre_init_kb(void) {
     gpio_set_pin_output(SEND_LEDS_MODE_PIN);
@@ -223,6 +234,7 @@ bool led_update_kb(led_t led_state) {
     return sendLedsState(led_state);
 }
 
+/*
 bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) {
 #ifdef WAIT_BOOT_KEY
     static unsigned counter = 0;
@@ -244,4 +256,83 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
     }
 
     return false;
+}
+*/
+
+static inline void gpio_atomic_set_pin_output_low(pin_t pin) {
+    ATOMIC_BLOCK_FORCEON {
+        gpio_set_pin_output(pin);
+        gpio_write_pin_low(pin);
+    }
+}
+
+static bool select_col(uint8_t col) {
+    pin_t pin = col_pins[col];
+    if (pin != NO_PIN) {
+        gpio_atomic_set_pin_output_low(pin);
+        return true;
+    }
+    return false;
+}
+
+static inline void gpio_atomic_set_pin_input_high(pin_t pin) {
+    ATOMIC_BLOCK_FORCEON {
+        gpio_set_pin_input_high(pin);
+    }
+}
+
+static void unselect_col(uint8_t col) {
+    pin_t pin = col_pins[col];
+    if (pin != NO_PIN) {
+        gpio_atomic_set_pin_input_high(pin);
+    }
+}
+
+static inline uint8_t readMatrixPin(pin_t pin) {
+    if (pin != NO_PIN) {
+        return (gpio_read_pin(pin) == MATRIX_INPUT_PRESSED_STATE) ? 0 : 1;
+    } else {
+        return 1;
+    }
+}
+
+void matrix_read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col, matrix_row_t row_shifter) {
+    bool key_pressed = false;
+
+    // Select col
+    if (!select_col(current_col)) { // select col
+        return;                     // skip NO_PIN col
+    }
+    matrix_output_select_delay();
+
+    // For each row...
+    for (uint8_t row_index = 0; row_index < ROWS_PER_HAND; row_index++) {
+        // Check row pin state
+        if (readMatrixPin(row_pins[row_index]) == 0) {
+            // Pin LO, set col bit
+            current_matrix[row_index] |= row_shifter;
+            key_pressed = true;
+        } else {
+            // Pin HI, clear col bit
+            current_matrix[row_index] &= ~row_shifter;
+        }
+    }
+
+    // Unselect col
+    unselect_col(current_col);
+    matrix_output_unselect_delay(current_col, key_pressed); // wait for all Row signals to go HIGH
+}
+
+bool matrix_scan_custom(matrix_row_t current_matrix[]) {
+    matrix_row_t curr_matrix[MATRIX_ROWS] = {0};
+
+    matrix_row_t row_shifter = MATRIX_ROW_SHIFTER;
+    for (uint8_t current_col = 0; current_col < MATRIX_COLS; ++current_col, row_shifter <<= 1) {
+        matrix_read_rows_on_col(curr_matrix, current_col, row_shifter);
+    }
+
+    bool changed = memcmp(raw_matrix, curr_matrix, sizeof(curr_matrix)) != 0;
+    if (changed) memcpy(raw_matrix, curr_matrix, sizeof(curr_matrix));
+
+    return (uint8_t)changed;
 }

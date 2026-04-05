@@ -1,3 +1,4 @@
 ALLOW_WARNINGS = yes
 CONSOLE_ENABLE = yes
 SPI_DRIVER_REQUIRED = yes
+SRC += matrix.c
