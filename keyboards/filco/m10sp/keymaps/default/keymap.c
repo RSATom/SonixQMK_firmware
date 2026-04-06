@@ -18,14 +18,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*L2*/KC_TAB,          KC_Q,     KC_W,    KC_E,         KC_R,            KC_T,             KC_T,         XXXXXXX/*M3*/,      XXXXXXX,             XXXXXXX,            KC_LWIN, // C5
         /*R1*/KC_7,            KC_8,     KC_9,    KC_0,         KC_MINUS,        KC_EQUAL,         KC_BACKSPACE, XXXXXXX,            XXXXXXX/*M7*/,       TT(FN_LAYER)/*Fn*/, XXXXXXX,
 
-        /*L3*/KC_CAPS_LOCK,    KC_A,     KC_S,    KC_D,         KC_F,            KC_G,             KC_G,         KC_LEFT_CTRL/*M4*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C7
+        /*L3*/KC_CAPS_LOCK,    KC_A,     KC_S,    KC_D,         KC_F,            KC_G,             KC_G,         KC_LALT/*M4*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C7
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_Y,         XXXXXXX,            XXXXXXX/*M8*/,       XXXXXXX,            XXXXXXX,
 
         /*L4*/LM_LSHIFT_LAYER, KC_Z,     KC_X,    KC_C,         KC_V,            KC_B,             KC_B,         KC_LCTL/*M5*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C9
         /*R2*/KC_U,            KC_I,     KC_O,    KC_P,         KC_LEFT_BRACKET, KC_RIGHT_BRACKET, KC_BACKSLASH, XXXXXXX,            XXXXXXX,             XXXXXXX,            XXXXXXX,
 
         /*L5*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX/*M2*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C4
-        /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_H,         XXXXXXX,            KC_RIGHT_CTRL/*M9*/, SPACE_FN,           XXXXXXX,
+        /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_H,         XXXXXXX,            KC_RALT/*M9*/,       SPACE_FN,           XXXXXXX,
 
         /*L6*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            XXXXXXX,             XXXXXXX,            KC_LALT, // C6
         /*R3*/KC_J,            KC_K,     KC_L,    KC_SEMICOLON, KC_QUOTE,        KC_ENTER,         KC_6,         XXXXXXX,            KC_RIGHT_CTRL,       XXXXXXX,            XXXXXXX,
