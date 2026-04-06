@@ -10,3 +10,5 @@
 #define SPI_SCK_PIN  A4 // B8
 #define SPI_MOSI_PIN A3 // D-
 #define SPI_MISO_PIN A2 // D+
+
+#define TAPPING_TOGGLE 2

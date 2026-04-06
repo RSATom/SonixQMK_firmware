@@ -16,7 +16,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            KC_GRAVE/*M6*/,      XXXXXXX,            XXXXXXX,
 
         /*L2*/KC_TAB,          KC_Q,     KC_W,    KC_E,         KC_R,            KC_T,             KC_T,         XXXXXXX/*M3*/,      XXXXXXX,             XXXXXXX,            KC_LWIN, // C5
-        /*R1*/KC_7,            KC_8,     KC_9,    KC_0,         KC_MINUS,        KC_EQUAL,         KC_BACKSPACE, XXXXXXX,            XXXXXXX/*M7*/,       MO(FN_LAYER)/*Fn*/, XXXXXXX,
+        /*R1*/KC_7,            KC_8,     KC_9,    KC_0,         KC_MINUS,        KC_EQUAL,         KC_BACKSPACE, XXXXXXX,            XXXXXXX/*M7*/,       TT(FN_LAYER)/*Fn*/, XXXXXXX,
 
         /*L3*/KC_CAPS_LOCK,    KC_A,     KC_S,    KC_D,         KC_F,            KC_G,             KC_G,         KC_LEFT_CTRL/*M4*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C7
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_Y,         XXXXXXX,            XXXXXXX/*M8*/,       XXXXXXX,            XXXXXXX,
