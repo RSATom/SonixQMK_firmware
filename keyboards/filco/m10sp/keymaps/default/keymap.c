@@ -21,7 +21,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*L3*/KC_CAPS_LOCK,    KC_A,     KC_S,    KC_D,         KC_F,            KC_G,             KC_G,         KC_LEFT_CTRL/*M4*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C7
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_Y,         XXXXXXX,            XXXXXXX/*M8*/,       XXXXXXX,            XXXXXXX,
 
-        /*L4*/LM_LSHIFT_LAYER, KC_Z,     KC_X,    KC_C,         KC_V,            KC_B,             KC_B,         MO(FN_LAYER)/*M5*/, XXXXXXX,             XXXXXXX,            XXXXXXX, // C9
+        /*L4*/LM_LSHIFT_LAYER, KC_Z,     KC_X,    KC_C,         KC_V,            KC_B,             KC_B,         KC_LCTL/*M5*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C9
         /*R2*/KC_U,            KC_I,     KC_O,    KC_P,         KC_LEFT_BRACKET, KC_RIGHT_BRACKET, KC_BACKSLASH, XXXXXXX,            XXXXXXX,             XXXXXXX,            XXXXXXX,
 
         /*L5*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX/*M2*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C4
@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*R3*/KC_J,            KC_K,     KC_L,    KC_SEMICOLON, KC_QUOTE,        KC_ENTER,         KC_6,         XXXXXXX,            KC_RIGHT_CTRL,       XXXXXXX,            XXXXXXX,
 
         /*L7*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            XXXXXXX,             SPACE_FN,           XXXXXXX, // C8
-        /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_N,         XXXXXXX,            MO(FN_LAYER)/*M10*/, KC_RIGHT_ALT,       XXXXXXX,
+        /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_N,         XXXXXXX,            KC_RCTL/*M10*/,      KC_RIGHT_ALT,       XXXXXXX,
 
         /*L8*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            KC_LCTL,             XXXXXXX,            XXXXXXX, // C10
         /*R4*/KC_M,            KC_COMMA, KC_DOT,  KC_SLASH,     LM_RSHIFT_LAYER, XXXXXXX,          XXXXXXX,      XXXXXXX,            XXXXXXX,             KC_RWIN,            XXXXXXX
