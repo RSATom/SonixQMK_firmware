@@ -2,6 +2,7 @@
 
 enum {
     DEFAULT_LAYER,
+    TAP_TOGGLE_FN_LAYER,
     FN_LAYER,
     SHIFT_LAYER,
 } Layers;
@@ -9,6 +10,7 @@ enum {
 #define LM_LSHIFT_LAYER LM(SHIFT_LAYER, MOD_LSFT)
 #define LM_RSHIFT_LAYER LM(SHIFT_LAYER, MOD_RSFT)
 #define SPACE_FN LT(FN_LAYER, KC_SPACE)
+#define TT_FN TT(TAP_TOGGLE_FN_LAYER)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [DEFAULT_LAYER] = LAYOUT_72us(
@@ -16,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          XXXXXXX,      XXXXXXX,            KC_GRAVE/*M6*/,      XXXXXXX,            XXXXXXX,
 
         /*L2*/KC_TAB,          KC_Q,     KC_W,    KC_E,         KC_R,            KC_T,             KC_T,         LM_LSHIFT_LAYER/*M3*/, XXXXXXX,          XXXXXXX,            KC_LWIN, // C5
-        /*R1*/KC_7,            KC_8,     KC_9,    KC_0,         KC_MINUS,        KC_EQUAL,         KC_BACKSPACE, XXXXXXX,            XXXXXXX/*M7*/,       TT(FN_LAYER)/*Fn*/, XXXXXXX,
+        /*R1*/KC_7,            KC_8,     KC_9,    KC_0,         KC_MINUS,        KC_EQUAL,         KC_BACKSPACE, XXXXXXX,            XXXXXXX/*M7*/,       TT_FN/*Fn*/,        XXXXXXX,
 
         /*L3*/KC_CAPS_LOCK,    KC_A,     KC_S,    KC_D,         KC_F,            KC_G,             KC_G,         KC_LALT/*M4*/,      XXXXXXX,             XXXXXXX,            XXXXXXX, // C7
         /*R_*/XXXXXXX,         XXXXXXX,  XXXXXXX, XXXXXXX,      XXXXXXX,         XXXXXXX,          KC_Y,         XXXXXXX,            LM_RSHIFT_LAYER/*M8*/, XXXXXXX,          XXXXXXX,
@@ -42,6 +44,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         /*L2*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______/*M3*/, _______,        _______,       _______,
         /*R1*/KC_F7,    KC_F8,   KC_F9,           KC_F10,       KC_F11,       KC_F12,     _______, _______,       _______/*M7*/,  _______/*Fn*/, _______,
+
+        /*L3*/_______,  _______, _______,         _______,      KC_PAGE_DOWN, _______,    _______, _______/*M4*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______,         _______,      _______,      _______,    KC_HOME, _______,       _______/*M8*/,  _______,       _______,
+
+        /*L4*/_______,  _______, KC_DELETE,       _______,      _______,      KC_PAGE_UP, _______, _______/*M5*/, _______,        _______,       _______,
+        /*R2*/KC_END,   _______, KC_PRINT_SCREEN, _______,      KC_PAUSE,     KC_INS,     KC_DEL,  _______,       _______,        _______,       _______,
+
+        /*L5*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______/*M2*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______,         _______,      _______,      _______,    KC_LEFT, _______,       _______/*M9*/,  _______,       _______,
+
+        /*L6*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______,        _______,       _______,
+        /*R3*/KC_DOWN,  KC_UP,   KC_RIGHT,        KC_HOME,      KC_PAGE_UP,   _______,    _______, _______,       _______,        _______,       _______,
+
+        /*L7*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______,        _______,       _______,
+        /*R_*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______/*M10*/, _______,       _______,
+
+        /*L8*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______,        _______,       _______,
+        /*R4*/_______,  _______, KC_END,          KC_PAGE_DOWN, _______,      _______,    _______, _______,       _______,        _______,       _______
+    ),
+    [TAP_TOGGLE_FN_LAYER] = LAYOUT_72us(
+        /*L1*/_______,  KC_F1,   KC_F2,           KC_F3,        KC_F4,        KC_F5,      KC_F6,   _______/*M1*/, _______,        _______,       _______,
+        /*R_*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______,       _______/*M6*/,  _______,       _______,
+
+        /*L2*/_______,  _______, _______,         _______,      _______,      _______,    _______, _______/*M3*/, _______,        _______,       _______,
+        /*R1*/KC_F7,    KC_F8,   KC_F9,           KC_F10,       KC_F11,       KC_F12,     KC_DEL,  _______,       _______/*M7*/,  _______/*Fn*/, _______,
 
         /*L3*/_______,  _______, _______,         _______,      KC_PAGE_DOWN, _______,    _______, _______/*M4*/, _______,        _______,       _______,
         /*R_*/_______,  _______, _______,         _______,      _______,      _______,    KC_HOME, _______,       _______/*M8*/,  _______,       _______,
