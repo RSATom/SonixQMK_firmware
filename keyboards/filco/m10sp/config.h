@@ -1,6 +1,5 @@
 #pragma once
 
-#define NO_SPLIT_USB_DETECT
 #define CORTEX_ENABLE_WFI_IDLE FALSE
 
 #define SEND_LEDS_MODE_PIN A1 // B10
